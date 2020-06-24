@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MinhaFloresta.Domain.Entity;
 using MinhaFloresta.Service.Class;
 using System.Threading.Tasks;
 
 namespace MinhaFloresta.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -16,8 +18,9 @@ namespace MinhaFloresta.WebAPI.Controllers
             _userService = userService;
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult> Get() => Ok(await _userService.Get<User>());
+        [AllowAnonymous]
+        [HttpGet("all")]
+        public async Task<ActionResult> Get() => Ok(await _userService.Get<User>());
 
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<ActionResult> GetUser(string id)
@@ -52,6 +55,7 @@ namespace MinhaFloresta.WebAPI.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Create(User user)
         {
