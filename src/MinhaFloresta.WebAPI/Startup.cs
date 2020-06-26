@@ -1,3 +1,6 @@
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,7 +14,6 @@ using MinhaFloresta.Repository.DatabaseSettings;
 using MinhaFloresta.Repository.Interfaces;
 using MinhaFloresta.Service.Class;
 using MinhaFloresta.Service.Interfaces;
-using System.Text;
 
 namespace MinhaFloresta.WebAPI
 {
@@ -69,7 +71,14 @@ namespace MinhaFloresta.WebAPI
             services.AddSingleton<IRepository, MongoRepository>();
 
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.WriteIndented = true;
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                });
 
         }
 
