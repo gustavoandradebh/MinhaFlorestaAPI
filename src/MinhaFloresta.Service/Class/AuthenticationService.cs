@@ -34,14 +34,14 @@ namespace MinhaFloresta.Service.Class
         private string generateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("MOTHERFUCKING_KEY");
+            var key = Encoding.ASCII.GetBytes("kl9nB4ja0bGapAo0");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddYears(1),
+                Expires = DateTime.UtcNow.AddDays(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

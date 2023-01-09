@@ -42,10 +42,10 @@ namespace MinhaFloresta.Service.Class
 
             return user;
         }
-        public override async Task Remove<T>(string userId)
+        public override async Task Remove<T>(string id)
         {
-            await _plantService.RemoveByUser(userId);
-            await _repository.Remove<User>(userId);
+            await _plantService.RemoveByUser(id);
+            await _repository.Remove<User>(id);
         }
     }
 }
